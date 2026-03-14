@@ -1,12 +1,12 @@
 from django import forms
 from .models import CustomUser
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 class CustomUserCreationForm(UserCreationForm):
-    username = forms.CharField(
-        label="Логін",
-        widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': "Вкажіть логін"})
-    )
+    # username = forms.CharField(
+    #     label="Логін",
+    #     widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': "Вкажіть логін"})
+    # )
     email = forms.EmailField(
         label="Email адрес",
         required=True,
@@ -40,7 +40,7 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
         model = CustomUser
-        fields = ('username', 'email', 'first_name', 'last_name', 'image', 'password1', 'password2' )
+        fields = ('email', 'first_name', 'last_name', 'image', 'password1', 'password2' )
     
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -59,8 +59,20 @@ class CustomUserCreationForm(UserCreationForm):
     def save(self, commit=True):
         user = super().save(commit=False)
         user.set_password(self.cleaned_data["password1"])
-        if self.cleaned_data.get('image'):
-            user.image_small = self.cleaned_data['image']
         if commit:
             user.save()
         return user
+
+class CustomUserLogin(AuthenticationForm):
+    username = forms.CharField(
+        label="Логін",
+        widget=forms.TextInput(attrs={
+            "class":"form-control"
+        })
+    )
+    password = forms.CharField(
+        label="Пароль",
+        widget=forms.PasswordInput(attrs={
+            "class":"form-control"
+        })
+    )
