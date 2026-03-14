@@ -134,12 +134,12 @@
 
 # Задача 2 Частини 2
 # Маємо дві множини з назвами міст. Створіть третю множину з тими назвами, які є в обох множинах.
-print("--- Завдання 2 --- Частина 2 ---")
-cities1 = {"Kyiv", "Lviv", "Odessa", "Dnipro"}
-cities2 = {"Lviv", "Kharkiv", "Kyiv", "Chernihiv"}
+# print("--- Завдання 2 --- Частина 2 ---")
+# cities1 = {"Kyiv", "Lviv", "Odessa", "Dnipro"}
+# cities2 = {"Lviv", "Kharkiv", "Kyiv", "Chernihiv"}
 
-commonCities = cities1 & cities2
-print("Міста, що повторюються в обох множинах", commonCities)
+# commonCities = cities1 & cities2
+# print("Міста, що повторюються в обох множинах", commonCities)
 
 
 # Задача 3 Частина 2

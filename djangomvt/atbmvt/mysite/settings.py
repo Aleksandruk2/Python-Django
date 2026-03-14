@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'users',
+    'users.apps.UsersConfig',
+    'categories.apps.CategoriesConfig'
 ]
 
 MIDDLEWARE = [
@@ -125,3 +128,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STATICFILES_DIRS = [
+    str(BASE_DIR / 'static'),
+]
+
+AUTH_USER_MODEL = 'users.CustomUser'
+
+IMAGES_URL = '/images/'
+
+IMAGES_ROOT = BASE_DIR / 'images'
+
+DJANGORESIZED_DEFAULT_SIZE = [1920, 1080]
+DJANGORESIZED_DEFAULT_SCALE = 0.5
+DJANGORESIZED_DEFAULT_QUALITY = 85
+DJANGORESIZED_DEFAULT_KEEP_META = True
+DJANGORESIZED_DEFAULT_FORCE_FORMAT = 'WEBP'
+DJANGORESIZED_DEFAULT_FORMAT_EXTENSIONS = {'WEBP': ".webp"}
+DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = True

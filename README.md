@@ -15,6 +15,7 @@ python3 -m venv .venv
 
 # Activate venv
 ```
+cd projects\djangomvt
 
 .venv\Scripts\activate.bat - win
 source ./venv/bin/activate - macOs/Linux
@@ -40,9 +41,16 @@ python -m django --version
 mkdir atbmvt
 django-admin startproject mysite atbmvt
 
+
+ 
+```
+
+## Run project
+```
+
 cd atbmvt
 py manage.py runserver 9581
- 
+
 ```
 
 ## Install Postgres
@@ -59,6 +67,33 @@ python manage.py createsuperuser
 py manage.py createsuperuser
 username - admin
 password - 123456
+py manage.py runserver 9581
+
+```
+
+## Working users Custom Django
+```
+py manage.py startapp users
+
+pip install Pillow
+ 
+py manage.py makemigrations users
+
+```
+
+## Перегляд списку бібліотек, їх збереження та клонування проєкту
+```
+pip freeze
+pip freeze > requirements.txt
+git clone https://github.com/Aleksandruk2/Python-Django.git
+cd Python-Django
+cd djangomvt
+py -m venv .venv
+.venv\Scripts\activate.bat
+
+python.exe -m pip install --upgrade pip
+pip install -r requirements.txt
+cd atbmvt
 py manage.py runserver 9581
 
 ```
