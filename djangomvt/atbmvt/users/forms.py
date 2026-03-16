@@ -1,6 +1,7 @@
 from django import forms
 from .models import CustomUser
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordResetForm, SetPasswordForm
+
 
 class CustomUserCreationForm(UserCreationForm):
     # username = forms.CharField(
@@ -63,6 +64,7 @@ class CustomUserCreationForm(UserCreationForm):
             user.save()
         return user
 
+
 class CustomUserLogin(AuthenticationForm):
     username = forms.CharField(
         label="Логін",
@@ -74,5 +76,33 @@ class CustomUserLogin(AuthenticationForm):
         label="Пароль",
         widget=forms.PasswordInput(attrs={
             "class":"form-control"
+        })
+    )
+
+
+class CustomPasswordResetForm(PasswordResetForm):
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={
+            "class": "form-control",
+            "placeholder": "Введіть email"
+        })
+    )
+
+
+class CustomSetPasswordForm(SetPasswordForm):
+
+    new_password1 = forms.CharField(
+        label="Новий пароль",
+        widget=forms.PasswordInput(attrs={
+            "class": "form-control",
+            "placeholder": "Введіть новий пароль"
+        })
+    )
+
+    new_password2 = forms.CharField(
+        label="Підтвердження пароля",
+        widget=forms.PasswordInput(attrs={
+            "class": "form-control",
+            "placeholder": "Підтвердіть новий пароль"
         })
     )
