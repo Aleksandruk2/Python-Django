@@ -1,5 +1,6 @@
 
 from django.shortcuts import redirect, render
+from .utils import save_user_avatar
 from .forms import CustomUserCreationForm, CustomUserLogin
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -17,9 +18,9 @@ def register(request):
                     user.username = form.cleaned_data['email']
                 image = request.FILES.get("image")
                 if image:
-                    user.image_small = image
-                    user.image_medium = image
-                    user.image_large = image
+                    user.image_small = save_user_avatar(image, size=(300, 300), folder='small')
+                    user.image_medium = save_user_avatar(image, size=(800, 800), folder='medium')
+                    user.image_large = save_user_avatar(image, size=(1200, 1200), folder='large')
                 user.save()
                 login(request, user)
                 return redirect('homepage')

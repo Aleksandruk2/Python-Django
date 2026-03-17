@@ -13,15 +13,6 @@ python3 -m venv .venv
 
 ```
 
-# Activate venv
-```
-cd projects\djangomvt
-
-.venv\Scripts\activate.bat - win
-source ./venv/bin/activate - macOs/Linux
-
-```
-
 # Install Django
 ```
 
@@ -43,6 +34,15 @@ django-admin startproject mysite atbmvt
 
 
  
+```
+
+# Activate venv
+```
+cd projects\djangomvt
+
+.venv\Scripts\activate.bat - win
+source ./venv/bin/activate - macOs/Linux
+
 ```
 
 ## Run project
@@ -95,5 +95,15 @@ python.exe -m pip install --upgrade pip
 pip install -r requirements.txt
 cd atbmvt
 py manage.py runserver 9581
+
+```
+
+## Working categories Django
+```
+
+cd atbmvt
+py manage.py startapp categories
+py manage.py makemigrations categories
+py manage.py migrate
 
 ```
