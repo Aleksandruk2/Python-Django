@@ -7,7 +7,8 @@ class CategoryCreateForm(forms.ModelForm):
         label="Назва категорії",
         widget=forms.TextInput(attrs={
             "class": "form-control",
-            "placeholder": "Введіть назву категорії"
+            "placeholder": "Введіть назву категорії",
+            "id": "name",
         })
     )
     description = forms.CharField(
@@ -16,6 +17,15 @@ class CategoryCreateForm(forms.ModelForm):
         widget=forms.Textarea(attrs={
             "class": "form-control",
             "rows": 4
+        })
+    )
+    slug = forms.CharField(
+        label="Slug",
+        required=True,
+        widget=forms.TextInput(attrs={
+            "class": "form-control",
+            "placeholder": "Введіть slug",
+            "id": "slug",
         })
     )
     image = forms.ImageField(
@@ -28,7 +38,7 @@ class CategoryCreateForm(forms.ModelForm):
 
     class Meta:
         model = Category
-        fields = ["name", "description", "image"]
+        fields = ["name", "slug", "description", "image"]
 
     def clean_name(self):
         name = self.cleaned_data.get("name")
@@ -37,3 +47,11 @@ class CategoryCreateForm(forms.ModelForm):
         if Category.objects.filter(name=name).exists():
             raise forms.ValidationError("Категорія вже існує")
         return name
+    
+    def clean_slug(self):
+        slug = self.cleaned_data.get("slug")
+        if len(slug) < 3:
+            raise forms.ValidationError("Slug повинен містити мінімум 3 символи")
+        if Category.objects.filter(slug=slug).exists():
+            raise forms.ValidationError("Такий slug вже існує")
+        return slug

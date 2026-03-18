@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import CategoryCreateForm
+from .utils import save_image
 from django.contrib import messages
 
 # Create your views here.
@@ -11,7 +12,7 @@ def create_category(request):
                 category = form.save(commit=False)
                 image = request.FILES.get("image")
                 if image:
-                    category.image = image
+                    category.image = save_image(image, size=(600,600), folder="images")
                 category.save()
                 return redirect('homepage')
             except Exception as e:
