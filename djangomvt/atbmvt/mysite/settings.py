@@ -131,6 +131,7 @@ STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
     str(BASE_DIR / 'static'),
+    str(BASE_DIR / 'images'),
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -138,8 +139,7 @@ AUTH_USER_MODEL = 'users.CustomUser'
 IMAGES_URL = '/images/'
 
 IMAGES_ROOT = BASE_DIR / 'images'
-AVATARS_ROOT = BASE_DIR / 'users/avatars'
-CATEGORIES_ROOT = BASE_DIR / 'categories'
+AVATARS_ROOT = BASE_DIR / 'images/avatars'
 
 DJANGORESIZED_DEFAULT_SIZE = [1920, 1080]
 DJANGORESIZED_DEFAULT_SCALE = 0.5
@@ -148,8 +148,6 @@ DJANGORESIZED_DEFAULT_KEEP_META = True
 DJANGORESIZED_DEFAULT_FORCE_FORMAT = 'WEBP'
 DJANGORESIZED_DEFAULT_FORMAT_EXTENSIONS = {'WEBP': ".webp"}
 DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = True
-
-
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'

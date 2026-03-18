@@ -34,7 +34,7 @@ def compress_image(image_field, size=(800,800), quality=85):
 def save_image(image, size, folder):
     optimized_image, image_name = compress_image(image, size)
     path = os.path.join(folder, image_name)
-    full_path = os.path.join(settings.CATEGORIES_ROOT, path)
+    full_path = os.path.join(settings.IMAGES_ROOT, path)
     os.makedirs(os.path.dirname(full_path), exist_ok=True)
     with open(full_path, "wb") as f:
         f.write(optimized_image.read())
