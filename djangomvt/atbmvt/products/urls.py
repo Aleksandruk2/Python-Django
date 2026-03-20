@@ -6,4 +6,5 @@ app_name='products'
 urlpatterns = [
     path('create/', views.product_create, name='create'),
     path("upload_temp_image/", views.upload_temp_image, name="upload_temp_image"),
+    path("delete_temp_image/", views.upload_temp_image, name="delete_temp_image"),
 ]

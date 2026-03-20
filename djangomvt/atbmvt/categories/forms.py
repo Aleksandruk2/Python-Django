@@ -15,7 +15,6 @@ class CategoryCreateForm(forms.ModelForm):
         label="Опис",
         required=False,
         widget=forms.Textarea(attrs={
-            "class": "form-control",
             "rows": 4
         })
     )
