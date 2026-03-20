@@ -107,3 +107,24 @@ py manage.py makemigrations categories
 py manage.py migrate
 
 ```
+
+
+## Working products Django
+```
+cd atbmvt
+py manage.py startapp products
+py manage.py makemigrations products
+py manage.py migrate
+py manage.py makemigrations products
+py manage.py migrate
+
+```
+
+## Working productImages Django
+```
+cd atbmvt
+
+py manage.py makemigrations productImages
+py manage.py migrate
+
+```
