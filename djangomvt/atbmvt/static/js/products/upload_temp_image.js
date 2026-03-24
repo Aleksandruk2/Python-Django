@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("зайшов в js")
+    
     FilePond.registerPlugin(FilePondPluginImagePreview);
 
     const inputElement = document.querySelector('#product-images');
@@ -7,12 +7,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const uploadUrl = inputElement.dataset.uploadUrl;
     const deleteUrl = inputElement.dataset.deleteUrl;
     const csrfToken = inputElement.dataset.csrfToken;
+    const dataNode = document.getElementById('images-data');
+    const existingImages = dataNode ? JSON.parse(dataNode.textContent) : [];
 
     const pond = FilePond.create(inputElement, {
         allowMultiple: true,
         allowReorder: true,
         allowImagePreview: true,
         imagePreviewHeight: 150,
+        files: existingImages.map(img => ({
+            source: img.id.toString(),
+            options: {
+                type: 'local'
+            }
+        })),
         server: {
             process: {
                 // url: "{% url 'products:upload_temp_image' %}",
@@ -25,12 +33,36 @@ document.addEventListener('DOMContentLoaded', () => {
                 onload: (response) => JSON.parse(response).file_id,
                 onerror: (response) => console.log("Error:", response)
             },
+            load: (source, load, error, progress, abort, headers) => {
+                const img = existingImages.find(i => i.id.toString() === source);
+                
+                if (img) {
+                    fetch(img.url)
+                        .then(res => res.blob())
+                        .then(load)
+                        .catch(() => error('Помилка завантаження файлу'));
+                } else {
+                    error('Файл не знайдено');
+                }
+            },
+            remove: (source, load, error) => {
+                fetch(deleteUrl, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken
+                    },
+                    body: JSON.stringify({ file_id: source })
+                })
+                .then(res => res.ok ? load() : error())
+                .catch(() => error("Error removing file"));
+            },
             revert: (uniqueFileId, load, error) => {
                 fetch(deleteUrl, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRFToken': '{{ csrf_token }}'
+                        'X-CSRFToken': csrfToken
                     },
                     body: JSON.stringify({ file_id: uniqueFileId })
                 })
@@ -40,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     else error(res.error || "Error deleting file");
                 })
                 .catch(err => error("Error deleting file"));
-            }
+            },
         }
     });
 
@@ -52,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const input = document.createElement('input');
             input.type = 'hidden';
             input.name = 'images';
-            input.value = file.serverId;
+            input.value = file.serverId || file.source; 
             input.dataset.priority = index;
             form.appendChild(input);
         });
