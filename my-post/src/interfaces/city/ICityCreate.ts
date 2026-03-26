@@ -1,5 +1,4 @@
-export interface ICity {
-    id: number;
+export interface ICityCreate {
     name: string;
     description: string;
 }
