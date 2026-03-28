@@ -32,6 +32,14 @@ export const cityApi= createApi({
                 body: body
             }),
             invalidatesTags: ["Cities"]
+        }),
+        editCity: builder.mutation<void, { id: number, body: ICityCreate }>({
+            query: ({id, body}) => ({
+                url: `/${id}/`,
+                method: "PUT",
+                body: body
+            }),
+            invalidatesTags: ["Cities"]
         })
 
     })
@@ -41,4 +49,5 @@ export const {
     useGetCitiesQuery,
     useDeleteCityMutation,
     useCreateCityMutation,
+    useEditCityMutation,
 } = cityApi;

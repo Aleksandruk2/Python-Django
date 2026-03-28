@@ -1,8 +1,10 @@
 import {useDeleteCityMutation, useGetCitiesQuery} from "../../services/cityApi/cityApi.ts";
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
     const {data: cities, isLoading, error} = useGetCitiesQuery();
     const [deleteCity] = useDeleteCityMutation();
+    const navigate = useNavigate();
 
     const deleteCityHandler = async (id: number) => {
         try {
@@ -25,7 +27,7 @@ const HomePage = () => {
 
     return (
         <div className="p-5">
-            {error && <p className="text-red-600 text-center mb-4">Помилка: {error?.data}</p>}
+            {error && <p className="text-red-600 text-center mb-4">Помилка: {'status' in error ? JSON.stringify(error.data) : error.message}</p>}
             <div className="p-10 bg-transparent min-h-screen">
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
                     {Array.isArray(cities) && cities.map(city => (
@@ -54,7 +56,7 @@ const HomePage = () => {
                                 <button
                                     type="button"
                                     onClick={() => {
-                                        // navigate(`/edit-city/${city.id}`);
+                                        navigate(`/edit-city/${city.id}`, { state: city });
                                     }}
                                     className="mt-2 ml-2 px-5 py-2 text-sm font-semibold rounded-lg bg-amber-300 hover:bg-amber-400 cursor-pointer text-black transition-colors shadow-md"
                                 >
