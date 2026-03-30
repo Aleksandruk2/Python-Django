@@ -4,6 +4,7 @@ from django.db import models
 class City(models.Model):
     name = models.CharField(max_length=250, blank=False)
     description = models.TextField(max_length=4000, null=True, blank=True)
+    image = models.ImageField(upload_to="images/", blank=True, null=True)
 
     class Neta:
         db_table = "tblCities"

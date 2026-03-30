@@ -70,52 +70,13 @@ pip install djangorestframework
 ```
 
 
-## Додаю superuser
-```
-python manage.py createsuperuser
-py manage.py createsuperuser
-username - admin
-password - 123456
-py manage.py runserver 9581
-
 ```
 
 ## Working City
 ```
 py manage.py startapp cities
+python -m pip install Pillow
 py manage.py makemigrations cities
-py manage.py migrate
-
-```
-
-
-## Working categories Django
-```
-
-cd atbmvt
-py manage.py startapp categories
-py manage.py makemigrations categories
-py manage.py migrate
-
-```
-
-
-## Working products Django
-```
-cd atbmvt
-py manage.py startapp products
-py manage.py makemigrations products
-py manage.py migrate
-py manage.py makemigrations products
-py manage.py migrate
-
-```
-
-## Working productImages Django
-```
-cd atbmvt
-
-py manage.py makemigrations productImages
 py manage.py migrate
 
 ```

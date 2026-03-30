@@ -5,36 +5,55 @@ import {useNavigate} from "react-router-dom";
 import type {ICityCreate} from "../../interfaces/city/ICityCreate.ts";
 import {Editor} from "@tinymce/tinymce-react";
 import {useCreateCityMutation} from "../../services/cityApi/cityApi.ts";
+import InputField from "../../common/inputs/InputField.tsx";
+import ImageUploader from "../../common/inputs/ImageUploader.tsx";
 
 const AddCityPage = () =>  {
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState<string>("");
+    // const [name, setName] = useState("");
+    // const [description, setDescription] = useState<string>("");
+
+    const [formValues, setFormValues] = useState<ICityCreate>({
+        name: "",
+        description: "",
+        image: undefined,
+    });
+
+    const [errors, setErrors] = useState<string[]>([]);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormValues({ ...formValues, [e.target.name]: e.target.value });
+    };
+
+    const validationChange = (isValid: boolean, fieldKey: string) => {
+        if (isValid && errors.includes(fieldKey)) {
+            setErrors(errors.filter((x) => x !== fieldKey));
+        } else if (!isValid && !errors.includes(fieldKey)) {
+            setErrors((state) => [...state, fieldKey]);
+        }
+    };
 
     const [createCity] = useCreateCityMutation();
 
-    // const [errors, setErrors] = useState<{ [key: string]: string[] }>({});
     const [showEditor, setShowEditor] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const model : ICityCreate = {
-                name,
-                description,
-            };
-            await createCity(model).unwrap();
-            // await axios.post(`${APP_ENV.API_BASE_URL}/api/cities/`, model, {
-            //     headers: { "Content-Type": "application/json" },
-            // });
+            const formData = new FormData();
+
+            formData.append("name", formValues.name);
+            formData.append("description", formValues.description);
+
+            if (formValues.image) {
+                formData.append("image", formValues.image);
+            }
+
+            await createCity(formData).unwrap();
+
             navigate(-1);
         } catch (err) {
             console.log(err);
-            // if (axios.isAxiosError(err) && err.response?.data?.errors) {
-            //     setErrors(err.response.data.errors);
-            // } else {
-            //     setErrors({ General: ["Помилка при додаванні міста"] });
-            // }
         }
     };
 
@@ -48,26 +67,34 @@ const AddCityPage = () =>  {
                 className="bg-white dark:bg-slate-900 shadow-lg rounded-xl p-8 w-full max-w-xl
                  border border-gray-200 dark:border-slate-700"
             >
+                <InputField
+                    label="Назва"
+                    name="name"
+                    placeholder="Вкажіть назву"
+                    value={formValues.name}
+                    onChange={handleChange}
+                    onValidationChange={validationChange}
+                    inputClassName="w-full border border-gray-300 dark:border-slate-600 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-400 focus:border-green-400 dark:bg-slate-800 dark:text-white transition"
+                    rules={[{ rule: "required", message: "Назва є обов'язковою" }]}
+                />
 
-
-                {/*{errors.General && (*/}
-                {/*    <p className="text-red-600 mb-4 text-center font-medium">{errors.General[0]}</p>*/}
-                {/*)}*/}
-
-
-
-                <div className="mb-5">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
-                        Назва
-                    </label>
-                    <input
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        className="w-full border border-gray-300 dark:border-slate-600 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-400 focus:border-green-400 dark:bg-slate-800 dark:text-white transition"
+                <div className="w-full text-center">
+                    <ImageUploader
+                        onChange={(file) =>
+                            setFormValues((prev) => ({ ...prev, image: file }))
+                        }
                     />
-                    {/*{errors.Name && <p className="text-red-600 text-sm">{errors.Name[0]}</p>}*/}
                 </div>
+
+                {/*<div className="w-full text-center">*/}
+                {/*    <ImagesUploader*/}
+                {/*        fileList={fileList}*/}
+                {/*        setFileList={setFileList}*/}
+                {/*        imageError={imageError}*/}
+                {/*        setImageError={setImageError}*/}
+                {/*    />*/}
+                {/*    {imageError && <p className="text-red-500 text-sm mt-1">Image is required</p>}*/}
+                {/*</div>*/}
 
                 <div className="mb-5">
                     <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
@@ -77,18 +104,15 @@ const AddCityPage = () =>  {
                         onClick={() => setShowEditor(true)}
                         className="w-full border border-gray-300 dark:border-slate-600 rounded-lg px-4 py-2 bg-gray-50 dark:bg-slate-800 cursor-pointer"
                     >
-                        {description ? (
+                        {formValues.description ? (
                             <div
                                 className="prose dark:prose-invert max-w-none"
-                                dangerouslySetInnerHTML={{ __html: description }}
+                                dangerouslySetInnerHTML={{ __html: formValues.description }}
                             />
                         ) : (
                             <span className="text-gray-400 dark:text-slate-500">Натисніть, щоб додати опис...</span>
                         )}
                     </div>
-                    {/*{errors.Description && (*/}
-                    {/*    <p className="text-red-600 text-sm">{errors.Description[0]}</p>*/}
-                    {/*)}*/}
                 </div>
 
 
@@ -104,8 +128,8 @@ const AddCityPage = () =>  {
                     <div className="bg-white dark:bg-slate-900 rounded-lg shadow-lg w-full max-w-3xl p-6 border border-gray-200 dark:border-slate-700">
                         <Editor
                             apiKey='0xky1zwyw6l6500xb89qg355iwjolt8lpsq5kx8it0rl3c71'
-                            value={description}
-                            onEditorChange={(content) => setDescription(content)}
+                            value={formValues.description}
+                            onEditorChange={(content) => setFormValues((prev) => ({...prev, description: content}))}
                             init={{
                                 height: 400,
                                 menubar: true,

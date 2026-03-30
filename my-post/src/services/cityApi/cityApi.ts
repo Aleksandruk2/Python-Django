@@ -25,7 +25,7 @@ export const cityApi= createApi({
             }),
             invalidatesTags: ["Cities"]
         }),
-        createCity: builder.mutation<void, ICityCreate>({
+        createCity: builder.mutation<void, FormData>({
             query: body => ({
                 url: "/",
                 method: "POST",
