@@ -1,5 +1,5 @@
 export interface ICityCreate {
     name: string;
     description: string;
-    image?: File;
+    image?: File | string | null;
 }

@@ -6,6 +6,7 @@ interface InputFieldProps {
     label: string;
     otherStyles?: string;
     inputClassName?: string;
+    labelClassName?: string;
     type?: "text" | "email" | "password";
     placeholder?: string;
     value?: string;
@@ -17,6 +18,7 @@ interface InputFieldProps {
 const InputField: React.FC<InputFieldProps> = ({
                                                    otherStyles,
                                                    inputClassName,
+                                                   labelClassName,
                                                    name,
                                                    label,
                                                    type = "text",
@@ -56,7 +58,7 @@ const InputField: React.FC<InputFieldProps> = ({
         <div className={`w-full mb-5 ${otherStyles}`}>
             <label
                 htmlFor={name}
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className={ labelClassName || "block mb-2 text-sm font-medium text-gray-900 dark:text-white"}
             >
                 {label}
             </label>

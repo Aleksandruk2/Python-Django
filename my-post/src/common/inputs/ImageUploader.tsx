@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React, {useRef, useState, useEffect} from "react";
 import Cropper from "react-easy-crop";
 import { LucideCircleX } from "lucide-react"
 
@@ -10,7 +10,8 @@ type Area = {
 };
 
 type Props = {
-    onChange: (file: File) => void;
+    onChange: (file: File | null) => void;
+    value?: string | File | null;
 };
 
 function createImage(url: string): Promise<HTMLImageElement> {
@@ -72,15 +73,26 @@ async function getCroppedImgFromCropper(
     });
 }
 
-const ImageUploader: React.FC<Props> = ({onChange}) => {
+const ImageUploader: React.FC<Props> = ({onChange, value=null}) => {
     const [imageSrc, setImageSrc] = useState<string | null>(null);
-    const [croppedImage, setCroppedImage] = useState<string | null>(null);
+    // const [croppedImage, setCroppedImage] = useState<string | null>(() => {
+    //     if (!value) return null;
+    //     if (typeof value === "string") return value;
+    //     return URL.createObjectURL(value);
+    // });
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [zoom, setZoom] = useState(1);
     const [rotation, setRotation] = useState(0);
     const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
     const [modalOpen, setModalOpen] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const preview = React.useMemo(() => {
+        if (!value) return null;
+
+        if (typeof value === "string") return value;
+
+        return URL.createObjectURL(value);
+    }, [value]);
 
     const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
@@ -100,20 +112,36 @@ const ImageUploader: React.FC<Props> = ({onChange}) => {
             croppedAreaPixels,
             rotation
         );
-        setCroppedImage(URL.createObjectURL(cropped));
+        // setCroppedImage(URL.createObjectURL(cropped));
         onChange(cropped);
         setModalOpen(false);
     };
 
     const handleButtonClick = () => {
-        // 3. Викликаємо метод .click() на прихованому інпуті через реф
+        // Викликаємо метод .click() на прихованому інпуті через реф
         fileInputRef.current?.click();
     };
+
+    // useEffect(() => {
+    //     return () => {
+    //         if (croppedImage && croppedImage.startsWith("blob:")) {
+    //             URL.revokeObjectURL(croppedImage);
+    //         }
+    //     };
+    // }, [croppedImage]);
+
+    useEffect(() => {
+        return () => {
+            if (preview && typeof value !== "string") {
+                URL.revokeObjectURL(preview);
+            }
+        };
+    }, [preview, value]);
 
     return (
         <div className="mb-6">
             <label className="block text-xs font-semibold mb-2">Виберіть зображення</label>
-            {!croppedImage && (
+            {!preview && (
                 <div>
                     <input type="file"
                            accept="image/*"
@@ -122,6 +150,7 @@ const ImageUploader: React.FC<Props> = ({onChange}) => {
                            className="hidden"
                     />
                     <button
+                        type="button"
                         onClick={handleButtonClick}
                         className="py-3 px-6 bg-blue-500 hover:bg-blue-600 text-white cursor-pointer transition duration-150"
                     >
@@ -131,19 +160,21 @@ const ImageUploader: React.FC<Props> = ({onChange}) => {
 
             )}
 
-
-
-            {croppedImage && (
+            {preview && (
                 <div className="flex flex-col items-center mt-4 relative">
                     <img
-                        src={croppedImage}
+                        src={preview}
                         alt="Cropped Preview"
-                        className="w-32 h-32 rounded-full object-cover border shadow"
+                        className="w-32 h-32 rounded-lg object-cover border shadow"
                     />
                     <div
-                        className="group absolute flex items-center justify-center bg-black/25 h-full w-32 rounded-full">
+                        className="group absolute flex items-center justify-center bg-black/25 h-full w-32 rounded-lg">
                         <button
-                            onClick={() => setCroppedImage(null)}
+                            type="button"
+                            onClick={() => {
+                                // setCroppedImage(null);
+                                onChange(null);
+                            }}
                             className="text-sm  cursor-pointer transition duration-200"
                         >
                             <LucideCircleX size="25" className="group-hover:opacity-100 opacity-50 text-white hover:scale-125 transition duration-150" />

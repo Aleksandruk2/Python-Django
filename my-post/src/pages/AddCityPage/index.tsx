@@ -83,6 +83,7 @@ const AddCityPage = () =>  {
                         onChange={(file) =>
                             setFormValues((prev) => ({ ...prev, image: file }))
                         }
+                        value={formValues.image}
                     />
                 </div>
 
@@ -120,7 +121,7 @@ const AddCityPage = () =>  {
                     type="submit"
                     className="w-full btn rounded-lg px-6 py-2 text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-base text-center leading-5"
                 >
-                    Зберегти
+                    Додати місто
                 </button>
             </form>
             {showEditor && (

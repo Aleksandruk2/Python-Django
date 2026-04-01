@@ -23,7 +23,7 @@ const HomePage = () => {
             </>
         );
     }
-    console.log("Error", error)
+    console.log("Помилка при завантажені", error)
 
     return (
         <div className="p-5">

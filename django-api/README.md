@@ -69,14 +69,29 @@ pip install djangorestframework
 
 ```
 
-
-```
-
 ## Working City
 ```
 py manage.py startapp cities
 python -m pip install Pillow
 py manage.py makemigrations cities
+py manage.py migrate
+
+```
+
+## Додаю superuser
+```
+py manage.py createsuperuser
+username - admin
+password - 123456
+py manage.py runserver 9581
+
+```
+
+## Working users Custom Django
+```
+py manage.py startapp users
+ 
+py manage.py makemigrations users
 py manage.py migrate
 
 ```
