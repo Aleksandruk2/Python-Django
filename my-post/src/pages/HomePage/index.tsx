@@ -10,7 +10,7 @@ const HomePage = () => {
         try {
             await deleteCity(id).unwrap();
         } catch (error) {
-            console.error("Помилка при видаленні країни:", error);
+            console.error("Помилка при видаленні міст:", error);
         }
     };
 

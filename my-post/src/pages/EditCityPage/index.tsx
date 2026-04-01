@@ -36,12 +36,6 @@ const EditCityPage = () =>  {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            // const model : ICityCreate = {
-            //     name: name,
-            //     description: description,
-            // };
-            //
-            // await editCity({ id: Number(id), body: model}).unwrap();
             const formData = new FormData();
             formData.append("name", formValues.name);
             formData.append("description", formValues.description);
@@ -120,13 +114,24 @@ const EditCityPage = () =>  {
                     </div>
                 </div>
 
+                <div className="flex gap-1">
+                    <button
+                        type="button"
+                        onClick={() => {
+                            navigate(-1);
+                        }}
+                        className="w-full btn rounded-lg px-6 py-2 text-white bg-gradient-to-r from-gray-500 via-gray-400 to-gray-300 hover:from-gray-600 hover:via-gray-500 hover:to-gray-400 focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-base text-center leading-5 transition duration-300"
+                    >
+                        Скасувати
+                    </button>
+                    <button
+                        type="submit"
+                        className="w-full btn rounded-lg px-6 py-2 text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:from-cyan-500 hover:via-cyan-600 hover:to-cyan-700 focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-base text-center leading-5 transition duration-300"
+                    >
+                        Редагувати
+                    </button>
+                </div>
 
-                <button
-                    type="submit"
-                    className="w-full btn rounded-lg px-6 py-2 text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-base text-center leading-5"
-                >
-                    Зберегти
-                </button>
             </form>
             {showEditor && (
                 <div className="fixed inset-0 bg-black/50 dark:bg-black/70 flex items-center justify-center z-50">

@@ -1,1 +1,47 @@
 @import "tailwindcss";
+
+/* Базові стилі для самого інпуту */
+.custom-slider {
+    -webkit-appearance: none; /* Вимикаємо дефолтний стиль Chrome/Safari */
+    appearance: none;
+    width: 100%;
+    height: 4px; /* Товщина доріжки */
+    background: #374151; /* Колір доріжки (gray-700) */
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+}
+
+/* СТИЛІ ДЛЯ "КРУЖЕЧКА" (Thumb) — Chrome, Safari, Edge, Opera */
+.custom-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px; /* Ширина повзунка */
+    height: 20px; /* Висота повзунка */
+    background: #0986bf;
+    border: 2px solid #7cbae6; /* Біла обводка */
+    border-radius: 50%; /* Робимо круглим */
+    transition: transform 0.15s ease-in-out;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.custom-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2); /* Збільшення при наведенні */
+    background: #0194d8; /* Трохи світліший при наведенні */
+}
+
+/* СТИЛІ ДЛЯ "КРУЖЕЧКА" (Thumb) — Firefox */
+.custom-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #0986bf;
+    border: 1px solid white;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.15s ease-in-out;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.custom-slider::-moz-range-thumb:hover {
+    transform: scale(1.2);
+}
