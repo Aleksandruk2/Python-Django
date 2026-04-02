@@ -111,7 +111,7 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST': 'db',
+        'HOST': '172.31.201.235',
         'NAME': 'django-bg',
         'USER': 'django-user',
         'PASSWORD': 'marko123halosh',
