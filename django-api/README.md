@@ -72,8 +72,15 @@ pip install djangorestframework
 ## Working City
 ```
 py manage.py startapp cities
-python -m pip install Pillow
 py manage.py makemigrations cities
+py manage.py migrate
+
+```
+
+## Working Department
+```
+py manage.py startapp department
+py manage.py makemigrations department
 py manage.py migrate
 
 ```
