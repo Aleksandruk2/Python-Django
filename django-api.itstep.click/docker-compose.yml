@@ -6,3 +6,10 @@ services:
     container_name: django-api
     ports:
       - "4512:8000"
+  front:
+    image: avalentyn/my-post:latest
+    #build: 
+    #  context: ./my-transfer-ts
+    container_name: my-post-front
+    ports:
+      - "4513:80"
