@@ -101,13 +101,21 @@ WSGI_APPLICATION = 'myapi.wsgi.application'
 # pass bonej32944@muncloud.comA
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'HOST': 'ep-billowing-rain-alflbeos-pooler.c-3.eu-central-1.aws.neon.tech',
+    #     'NAME': 'neondb',
+    #     'USER': 'neondb_owner',
+    #     'PASSWORD': 'npg_79kTAGSHUnYF',
+    #     'PORT': '5432'
+    # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST': 'ep-billowing-rain-alflbeos-pooler.c-3.eu-central-1.aws.neon.tech',
-        'NAME': 'neondb',
-        'USER': 'neondb_owner',
-        'PASSWORD': 'npg_79kTAGSHUnYF',
-        'PORT': '5432'
+        'HOST': 'db',
+        'NAME': 'django-bg',
+        'USER': 'django-user',
+        'PASSWORD': 'marko123halosh',
+        'PORT': '5222'
     }
 }
 
