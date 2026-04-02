@@ -54,14 +54,6 @@ async function getCroppedImgFromCropper(
 
     ctx.restore();
 
-    // return new Promise((resolve) => {
-    //     canvas.toBlob((blob) => {
-    //         if (!blob) return;
-    //         const url = URL.createObjectURL(blob);
-    //         resolve(url);
-    //     }, "image/jpeg");
-    // });
-
     return new Promise((resolve) => {
         canvas.toBlob((blob) => {
             if (!blob) return;
