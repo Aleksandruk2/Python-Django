@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage";
 import AddCityPage from "./pages/AddCityPage";
 import MainLayout from "./MainLayout";
 import EditCityPage from "./pages/EditCityPage";
+import DepartmentsPage from "./pages/DepartmentsPage";
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
                     <Route index element={<HomePage />} />
                     <Route path="add-city" element={<AddCityPage />} />
                     <Route path="edit-city/:id" element={<EditCityPage />} />
+                    <Route path="departments" element={<DepartmentsPage />} />
                 </Route>
             </Routes>
         </>

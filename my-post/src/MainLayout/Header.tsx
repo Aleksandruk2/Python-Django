@@ -19,10 +19,13 @@ function Header() {
                     </div>
                     <div className="justify-between items-center w-full sm:flex sm:w-auto ">
                         <ul className="flex flex-col mt-4 font-medium sm:flex-row sm:space-x-8 sm:mt-0">
-                            <Link to="/" className="font-semibold hover:text-gray-200 flex items-center font-medium dark:text-white">
+                            <Link to="/" className="hover:text-gray-200 flex items-center font-medium dark:text-white">
                                 Міста
                             </Link>
-                            <Link to="/add-city" className="font-semibold hover:text-gray-200 flex items-center font-medium dark:text-white">
+                            <Link to="departments" className="hover:text-gray-200 flex items-center font-medium dark:text-white">
+                                Відділи
+                            </Link>
+                            <Link to="/add-city" className="hover:text-gray-200 flex items-center font-medium dark:text-white">
                                 Додати місто
                             </Link>
                         </ul>
