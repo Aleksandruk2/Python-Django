@@ -16,7 +16,7 @@ services:
     ports:
       - "5222:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - ${VOLUME_POSTGRES}
     networks:
       - app_net
 
@@ -24,6 +24,8 @@ services:
     image: avalentyn/django-api:latest
     container_name: django-api
     restart: always
+    volumes:
+      - ${VOLUME_SERVER_API}
     depends_on:
       - db
     environment:
