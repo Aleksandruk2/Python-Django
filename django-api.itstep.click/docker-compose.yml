@@ -9,12 +9,12 @@ services:
     image: postgres:18.1
     container_name: postgres-db-django
     restart: always
+    ports:
+      - "5222:5432"
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    ports:
-      - "5222:5432"
     volumes:
       - ${VOLUME_POSTGRES}
     networks:
@@ -49,6 +49,3 @@ services:
       - "4513:80"
     networks:
       - app_net
-
-volumes:
-  postgres_data:
